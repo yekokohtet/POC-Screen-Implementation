@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.padcmyanmar.poc_screen_implementation.R;
 import com.padcmyanmar.poc_screen_implementation.adapters.CinemaFragmentPagerAdapter;
+import com.padcmyanmar.poc_screen_implementation.data.models.PopularMoviesModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        PopularMoviesModel.getInstance().startLoadingPopularMovies();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
