@@ -41,7 +41,7 @@ public class PopularMoviesModel {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onPopularMoviesDataLoaded(RestApiEvents.MoviesDataLoadedEvent event) {
-        mPopularMovies.addAll(event.getLoadedPopularMoveis());
+        mPopularMovies.addAll(event.getLoadedPopularMovies());
         popularMoviesPageIndex = event.getLoadedPageIndex() + 1;
     }
 }

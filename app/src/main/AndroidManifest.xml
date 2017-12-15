@@ -3,7 +3,7 @@
     package="com.padcmyanmar.poc_screen_implementation">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".POCScreenImplementationApp"
@@ -17,13 +17,18 @@
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".activities.CinemaImageFullScreenActivity" />
+        <activity
+            android:name=".activities.MoviesDetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.CinemaImageFullScreenActivity" />
     </application>
 
 </manifest>

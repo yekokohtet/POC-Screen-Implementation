@@ -41,7 +41,7 @@ public class RestApiEvents {
             return loadedPageIndex;
         }
 
-        public List<PopularMoviesVO> getLoadedPopularMoveis() {
+        public List<PopularMoviesVO> getLoadedPopularMovies() {
             return loadedPopularMovies;
         }
     }

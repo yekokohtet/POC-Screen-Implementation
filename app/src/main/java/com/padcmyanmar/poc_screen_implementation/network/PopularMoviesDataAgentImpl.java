@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -54,23 +53,15 @@ public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent{
 
         Call<GetPopularMoviesResponse> loadPopularMoviesCall = theAPI.loadPopularMovies(accessToken, pageNo);
 
-        loadPopularMoviesCall.enqueue(new Callback<GetPopularMoviesResponse>() {
+        loadPopularMoviesCall.enqueue(new POCSICallback<GetPopularMoviesResponse>() {
             @Override
             public void onResponse(Call<GetPopularMoviesResponse> call, Response<GetPopularMoviesResponse> response) {
+                super.onResponse(call, response);
                 GetPopularMoviesResponse getPopularMoviesResponse = response.body();
                 if (getPopularMoviesResponse != null && getPopularMoviesResponse.getPopularMoviesList().size() > 0) {
                     RestApiEvents.MoviesDataLoadedEvent moviesDataLoadedEvent = new RestApiEvents.MoviesDataLoadedEvent(getPopularMoviesResponse.getPage(), getPopularMoviesResponse.getPopularMoviesList());
                     EventBus.getDefault().post(moviesDataLoadedEvent);
-                } else {
-                    RestApiEvents.ErrorInvokingAPIEvent errorEvent = new RestApiEvents.ErrorInvokingAPIEvent("No data could be loaded for now. Pls try again later.");
-                    EventBus.getDefault().post(errorEvent);
                 }
-            }
-
-            @Override
-            public void onFailure(Call<GetPopularMoviesResponse> call, Throwable t) {
-                RestApiEvents.ErrorInvokingAPIEvent errorEvent = new RestApiEvents.ErrorInvokingAPIEvent(t.getMessage());
-                EventBus.getDefault().post(errorEvent);
             }
         });
     }

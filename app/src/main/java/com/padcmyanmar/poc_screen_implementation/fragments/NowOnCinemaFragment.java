@@ -71,7 +71,7 @@ public class NowOnCinemaFragment extends Fragment implements CinemaItemDelegate{
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPopularMoviesDataLoaded(RestApiEvents.MoviesDataLoadedEvent event) {
-        mNowOnCinemaAdapter.appendNewData(event.getLoadedPopularMoveis());
+        mNowOnCinemaAdapter.appendNewData(event.getLoadedPopularMovies());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
