@@ -5,5 +5,6 @@ package com.padcmyanmar.poc_screen_implementation.delegates;
  */
 
 public interface CinemaItemDelegate {
-    void onTapImageFullScreen();
+
+    void onTapMovieOverviewButton();
 }

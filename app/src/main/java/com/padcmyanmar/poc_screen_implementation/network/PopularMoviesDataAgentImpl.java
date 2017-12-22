@@ -1,5 +1,7 @@
 package com.padcmyanmar.poc_screen_implementation.network;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.padcmyanmar.poc_screen_implementation.events.RestApiEvents;
 import com.padcmyanmar.poc_screen_implementation.network.responses.GetPopularMoviesResponse;
@@ -49,7 +51,7 @@ public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent{
     }
 
     @Override
-    public void loadPopularMovies(String accessToken, final int pageNo) {
+    public void loadPopularMovies(String accessToken, final int pageNo, final Context context) {
 
         Call<GetPopularMoviesResponse> loadPopularMoviesCall = theAPI.loadPopularMovies(accessToken, pageNo);
 
@@ -59,7 +61,7 @@ public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent{
                 super.onResponse(call, response);
                 GetPopularMoviesResponse getPopularMoviesResponse = response.body();
                 if (getPopularMoviesResponse != null && getPopularMoviesResponse.getPopularMoviesList().size() > 0) {
-                    RestApiEvents.MoviesDataLoadedEvent moviesDataLoadedEvent = new RestApiEvents.MoviesDataLoadedEvent(getPopularMoviesResponse.getPage(), getPopularMoviesResponse.getPopularMoviesList());
+                    RestApiEvents.MoviesDataLoadedEvent moviesDataLoadedEvent = new RestApiEvents.MoviesDataLoadedEvent(getPopularMoviesResponse.getPage(), getPopularMoviesResponse.getPopularMoviesList(), context);
                     EventBus.getDefault().post(moviesDataLoadedEvent);
                 }
             }

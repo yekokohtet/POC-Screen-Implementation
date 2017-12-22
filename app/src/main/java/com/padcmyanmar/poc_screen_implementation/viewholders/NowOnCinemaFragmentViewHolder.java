@@ -41,12 +41,6 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
         super(itemView);
         ButterKnife.bind(this, itemView);
         mCinemaItemDelegate = cinemaItemDelegate;
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCinemaItemDelegate.onTapImageFullScreen();
-            }
-        });
     }
 
 
@@ -70,6 +64,6 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
 
     @Override
     public void onClick(View view) {
-
+//        mCinemaItemDelegate.onTapMovieOverviewButton();
     }
 }

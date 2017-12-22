@@ -8,47 +8,47 @@ import android.database.sqlite.SQLiteOpenHelper;
  * Created by yekokohtet on 12/14/17.
  */
 
-public class MoivieDBHelper extends SQLiteOpenHelper {
+public class MovieDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "movies.db";
+    private static final String DATABASE_NAME = "movies.db";
 
     private static final String SQL_CREATE_POPULAR_MOVIE_TABLE = "CREATE TABLE " + MoviesContract.PopularMovieEntry.TABLE_NAME + " (" +
             MoviesContract.PopularMovieEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            MoviesContract.PopularMovieEntry.COLUMN_VOTE_COUNT + "INTEGER NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_ID + "INTEGER NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_VIDEO + "BOOLEAN NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_VOTE_AVERAGE + "FLOAT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_TITLE + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_POPULARITY + "FLOAT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_POSTER_PATH + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_LANGUAGE + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_ORIGNINAL_TITLE + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_BACKDROP_PATH + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_ADULT + "BOOLEAN NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_OVERVIEW + "TEXT NOT NULL, " +
-            MoviesContract.PopularMovieEntry.COLUMN_RELEASE_DATE + "TEXT NOT NULL, " +
+            MoviesContract.PopularMovieEntry.COLUMN_VOTE_COUNT + "INTEGER, " +
+            MoviesContract.PopularMovieEntry.COLUMN_POPULAR_MOVIE_ID + "VARCHAR (256), " +
+            MoviesContract.PopularMovieEntry.COLUMN_VIDEO + "BOOLEAN, " +
+            MoviesContract.PopularMovieEntry.COLUMN_VOTE_AVERAGE + "FLOAT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_TITLE + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_POPULARITY + "FLOAT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_POSTER_PATH + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_LANGUAGE + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_TITLE + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_BACKDROP_PATH + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_ADULT + "BOOLEAN, " +
+            MoviesContract.PopularMovieEntry.COLUMN_OVERVIEW + "TEXT, " +
+            MoviesContract.PopularMovieEntry.COLUMN_RELEASE_DATE + "TEXT, " +
 
-            " UNIQUE (" + MoviesContract.PopularMovieEntry.COLUMN_TITLE + ") ON CONFLICT IGNORE" +
+            " UNIQUE (" + MoviesContract.PopularMovieEntry.COLUMN_TITLE + ") ON CONFLICT REPLACE" +
             " );";
 
     private static final String SQL_CREATE_GENRE_ID_TABLE = "CREATE TABLE " + MoviesContract.GenreIdEntry.TABLE_NAME + " (" +
             MoviesContract.GenreIdEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            MoviesContract.GenreIdEntry.COLUMN_GENRE_ID + "INTEGER NOT NULL, " +
+            MoviesContract.GenreIdEntry.COLUMN_GENRE_ID + "VARCHAR (256), " +
 
-            " UNIQUE (" + MoviesContract.GenreIdEntry.COLUMN_GENRE_ID + ") ON CONFLICT IGNORE" +
+            " UNIQUE (" + MoviesContract.GenreIdEntry.COLUMN_GENRE_ID + ") ON CONFLICT REPLACE" +
             " );";
 
     private static final String SQL_CREATE_POPLAR_MOVIE_GENRE_ID_TABLE = "CREATE TABLE " + MoviesContract.PopularMovieGenreIdEntry.TABLE_NAME + " (" +
             MoviesContract.PopularMovieGenreIdEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-            MoviesContract.PopularMovieGenreIdEntry.COLUMN_POPULAR_MOVIE_TITLE + "INTEGER NOT NULL, " +
-            MoviesContract.PopularMovieGenreIdEntry.COLUMN_GENRE_ID + "INTEGER NOT NULL, " +
+            MoviesContract.PopularMovieGenreIdEntry.COLUMN_POPULAR_MOVIE_ID + "VARCHAR (256), " +
+            MoviesContract.PopularMovieGenreIdEntry.COLUMN_GENRE_ID + "INTEGER, " +
 
             " UNIQUE (" + MoviesContract.PopularMovieGenreIdEntry.COLUMN_GENRE_ID + ", " +
-            MoviesContract.PopularMovieGenreIdEntry.COLUMN_POPULAR_MOVIE_TITLE + ") ON CONFLICT IGNORE" +
+            MoviesContract.PopularMovieGenreIdEntry.COLUMN_POPULAR_MOVIE_ID + ") ON CONFLICT REPLACE" +
             " );";
 
-    public MoivieDBHelper(Context context) {
+    public MovieDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

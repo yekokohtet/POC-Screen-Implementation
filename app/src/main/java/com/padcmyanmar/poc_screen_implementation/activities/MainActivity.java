@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PopularMoviesModel.getInstance().startLoadingPopularMovies();
+        PopularMoviesModel.getInstance().startLoadingPopularMovies(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayoutCinema = findViewById(R.id.tl_cinema);
         tabLayoutCinema.setupWithViewPager(vpCinema);
+
     }
 
     @Override
@@ -67,4 +68,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

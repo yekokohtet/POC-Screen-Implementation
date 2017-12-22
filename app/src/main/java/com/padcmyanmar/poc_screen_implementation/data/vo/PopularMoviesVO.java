@@ -1,6 +1,9 @@
 package com.padcmyanmar.poc_screen_implementation.data.vo;
 
+import android.content.ContentValues;
+
 import com.google.gson.annotations.SerializedName;
+import com.padcmyanmar.poc_screen_implementation.data.persistence.MoviesContract;
 
 import java.util.List;
 
@@ -106,5 +109,25 @@ public class PopularMoviesVO {
 
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    public ContentValues parseToContentValues() {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_VOTE_COUNT, voteCount);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_POPULAR_MOVIE_ID, id);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_VIDEO, video);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_VOTE_AVERAGE, voteAverage);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_TITLE, title);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_POPULARITY, popularity);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_POSTER_PATH, posterPath);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_LANGUAGE, originalLanguage);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_TITLE, originalTitle);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_BACKDROP_PATH, backdropPath);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_ADULT, adult);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_OVERVIEW, overview);
+        contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_RELEASE_DATE, releaseDate);
+
+        return contentValues;
     }
 }

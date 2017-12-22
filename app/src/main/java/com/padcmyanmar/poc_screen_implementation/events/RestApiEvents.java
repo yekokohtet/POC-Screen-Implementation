@@ -1,5 +1,7 @@
 package com.padcmyanmar.poc_screen_implementation.events;
 
+import android.content.Context;
+
 import com.padcmyanmar.poc_screen_implementation.data.vo.PopularMoviesVO;
 
 import java.util.List;
@@ -32,9 +34,12 @@ public class RestApiEvents {
         private int loadedPageIndex;
         private List<PopularMoviesVO> loadedPopularMovies;
 
-        public MoviesDataLoadedEvent(int loadedPageIndex, List<PopularMoviesVO> loadedPopularMovies) {
+        private Context context;
+
+        public MoviesDataLoadedEvent(int loadedPageIndex, List<PopularMoviesVO> loadedPopularMovies, Context context) {
             this.loadedPageIndex = loadedPageIndex;
             this.loadedPopularMovies = loadedPopularMovies;
+            this.context = context;
         }
 
         public int getLoadedPageIndex() {
@@ -43,6 +48,10 @@ public class RestApiEvents {
 
         public List<PopularMoviesVO> getLoadedPopularMovies() {
             return loadedPopularMovies;
+        }
+
+        public Context getContext() {
+            return context;
         }
     }
 }
