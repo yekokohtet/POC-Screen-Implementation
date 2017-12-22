@@ -1,6 +1,7 @@
 package com.padcmyanmar.poc_screen_implementation.data.vo;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 import com.padcmyanmar.poc_screen_implementation.data.persistence.MoviesContract;
@@ -129,5 +130,17 @@ public class PopularMoviesVO {
         contentValues.put(MoviesContract.PopularMovieEntry.COLUMN_RELEASE_DATE, releaseDate);
 
         return contentValues;
+    }
+
+    public static PopularMoviesVO parseFromCursor(Cursor cursor) {
+
+        PopularMoviesVO popularMovies = new PopularMoviesVO();
+
+        popularMovies.voteAverage = cursor.getInt(cursor.getColumnIndex(MoviesContract.PopularMovieEntry.COLUMN_VOTE_AVERAGE));
+        popularMovies.title = cursor.getString(cursor.getColumnIndex(MoviesContract.PopularMovieEntry.COLUMN_ORIGINAL_TITLE));
+        popularMovies.popularity = cursor.getFloat(cursor.getColumnIndex(MoviesContract.PopularMovieEntry.COLUMN_POPULARITY));
+        popularMovies.posterPath = cursor.getString(cursor.getColumnIndex(MoviesContract.PopularMovieEntry.COLUMN_POSTER_PATH));
+
+        return popularMovies;
     }
 }

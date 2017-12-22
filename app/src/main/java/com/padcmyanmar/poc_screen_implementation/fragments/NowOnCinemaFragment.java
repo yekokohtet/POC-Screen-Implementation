@@ -1,9 +1,13 @@
 package com.padcmyanmar.poc_screen_implementation.fragments;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
@@ -16,6 +20,7 @@ import com.padcmyanmar.poc_screen_implementation.components.EmptyViewPod;
 import com.padcmyanmar.poc_screen_implementation.components.SmartRecyclerView;
 import com.padcmyanmar.poc_screen_implementation.components.SmartScrollListener;
 import com.padcmyanmar.poc_screen_implementation.data.models.PopularMoviesModel;
+import com.padcmyanmar.poc_screen_implementation.data.persistence.MoviesContract;
 import com.padcmyanmar.poc_screen_implementation.data.vo.PopularMoviesVO;
 import com.padcmyanmar.poc_screen_implementation.delegates.CinemaItemDelegate;
 import com.padcmyanmar.poc_screen_implementation.events.RestApiEvents;
@@ -24,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,7 +38,10 @@ import butterknife.ButterKnife;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NowOnCinemaFragment extends Fragment implements CinemaItemDelegate {
+public class NowOnCinemaFragment extends Fragment
+        implements CinemaItemDelegate, LoaderManager.LoaderCallbacks<Cursor> {
+
+    private static final int MOVIES_LIST_LOADER_ID = 1001;
 
     SmartRecyclerView rvNowOnCinema;
     CinemaItemDelegate mCinemaItemDelegate;
@@ -105,6 +114,8 @@ public class NowOnCinemaFragment extends Fragment implements CinemaItemDelegate 
 
         rvNowOnCinema.addOnScrollListener(mSmartScrollListener);
 
+        getLoaderManager().initLoader(MOVIES_LIST_LOADER_ID, null, this);
+
         return view;
 
     }
@@ -117,8 +128,8 @@ public class NowOnCinemaFragment extends Fragment implements CinemaItemDelegate 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPopularMoviesDataLoaded(RestApiEvents.MoviesDataLoadedEvent event) {
-        mNowOnCinemaAdapter.appendNewData(event.getLoadedPopularMovies());
-        swipeRefreshLayout.setRefreshing(false);
+//        mNowOnCinemaAdapter.appendNewData(event.getLoadedPopularMovies());
+//        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -126,4 +137,29 @@ public class NowOnCinemaFragment extends Fragment implements CinemaItemDelegate 
         Snackbar.make(rvNowOnCinema, event.getErrorMsg(), Snackbar.LENGTH_INDEFINITE).show();
     }
 
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return new CursorLoader(getContext(), MoviesContract.PopularMovieEntry.CONTENT_URI, null, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        if (data != null && data.moveToFirst()) {
+            List<PopularMoviesVO> moviesList = new ArrayList<>();
+
+            do {
+                PopularMoviesVO movie = PopularMoviesVO.parseFromCursor(data);
+                moviesList.add(movie);
+            } while (data.moveToNext());
+
+            mNowOnCinemaAdapter.setNewData(moviesList);
+            swipeRefreshLayout.setRefreshing(false);
+        }
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+
+    }
 }
