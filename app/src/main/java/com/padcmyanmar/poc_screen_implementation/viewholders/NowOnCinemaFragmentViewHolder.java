@@ -22,6 +22,8 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
 
     private CinemaItemDelegate mCinemaItemDelegate;
 
+    private PopularMoviesVO mData;
+
     @BindView(R.id.tv_cinema_name)
     TextView tvCinemaName;
 
@@ -37,7 +39,7 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
     @BindView(R.id.iv_cinema_poster)
     ImageView ivCinemaPoster;
 
-    public NowOnCinemaFragmentViewHolder(View itemView, final CinemaItemDelegate cinemaItemDelegate) {
+    public NowOnCinemaFragmentViewHolder(View itemView, CinemaItemDelegate cinemaItemDelegate) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         mCinemaItemDelegate = cinemaItemDelegate;
@@ -46,13 +48,16 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
 
     @Override
     public void setData(PopularMoviesVO data) {
+
+        mData = data;
+
         tvCinemaName.setText(data.getTitle());
         tvCinemaRating.setText(String.valueOf(data.getVoteAverage()));
         float rate = data.getPopularity()/200;
         ratingBar.setRating(rate);
 
         RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.img_it_cinema_poster)
+                .placeholder(R.drawable.img_placeholder_poster)
                 .centerCrop();
 
         Glide
@@ -64,6 +69,14 @@ public class NowOnCinemaFragmentViewHolder extends BaseViewHolder<PopularMoviesV
 
     @Override
     public void onClick(View view) {
-//        mCinemaItemDelegate.onTapMovieOverviewButton();
+        switch (view.getId()) {
+            case R.id.btn_movie_overview:
+                mCinemaItemDelegate.onTapMovieOverviewButton(mData);
+                break;
+            case R.id.btn_full_screen:
+                mCinemaItemDelegate.onTapImageFullScreenButton();
+                break;
+        }
+
     }
 }

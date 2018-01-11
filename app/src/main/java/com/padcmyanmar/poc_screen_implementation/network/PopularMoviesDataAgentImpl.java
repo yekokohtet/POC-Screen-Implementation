@@ -20,13 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by yekokohtet on 12/8/17.
  */
 
-public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent{
+public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent {
 
-    private static PopularMoviesDataAgentImpl objInstance;
+//    private static PopularMoviesDataAgentImpl objInstance;
 
     private PopularMoviesAPI theAPI;
 
-    private PopularMoviesDataAgentImpl() {
+    public PopularMoviesDataAgentImpl() {
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -43,12 +43,12 @@ public class PopularMoviesDataAgentImpl implements PopularMoviesDataAgent{
         theAPI = retrofit.create(PopularMoviesAPI.class);
     }
 
-    public static PopularMoviesDataAgentImpl getInstance() {
-        if (objInstance == null) {
-            objInstance = new PopularMoviesDataAgentImpl();
-        }
-        return objInstance;
-    }
+//    public static PopularMoviesDataAgentImpl getInstance() {
+//        if (objInstance == null) {
+//            objInstance = new PopularMoviesDataAgentImpl();
+//        }
+//        return objInstance;
+//    }
 
     @Override
     public void loadPopularMovies(String accessToken, final int pageNo, final Context context) {

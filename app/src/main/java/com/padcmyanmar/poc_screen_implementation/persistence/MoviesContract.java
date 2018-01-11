@@ -1,4 +1,4 @@
-package com.padcmyanmar.poc_screen_implementation.data.persistence;
+package com.padcmyanmar.poc_screen_implementation.persistence;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;

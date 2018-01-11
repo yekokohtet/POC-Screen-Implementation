@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.padcmyanmar.poc_screen_implementation.activities.MainActivity">
+    tools:context="com.padcmyanmar.poc_screen_implementation.activities.MoviesListActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -24,8 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.padcmyanmar.poc_screen_implementation.activities.MainActivity"
-        tools:showIn="@layout/activity_main">
+        tools:context="com.padcmyanmar.poc_screen_implementation.activities.MoviesListActivity"
+        tools:showIn="@layout/activity_movies_list">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vp_cinema"

@@ -12,22 +12,31 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.padcmyanmar.poc_screen_implementation.POCScreenImplApp;
 import com.padcmyanmar.poc_screen_implementation.R;
 import com.padcmyanmar.poc_screen_implementation.adapters.CinemaFragmentPagerAdapter;
 import com.padcmyanmar.poc_screen_implementation.data.models.PopularMoviesModel;
 
-public class MainActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+public class MoviesListActivity extends AppCompatActivity {
+
+    @Inject
+    PopularMoviesModel mPopularMoviesModel;
 
     ViewPager vpCinema;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movies_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        PopularMoviesModel.getInstance().startLoadingPopularMovies(getApplicationContext());
+        POCScreenImplApp mPOCScreeImplApp = (POCScreenImplApp) getApplicationContext();
+        mPOCScreeImplApp.getPOCAppComponent().inject(this);
+
+        mPopularMoviesModel.startLoadingPopularMovies(getApplicationContext());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

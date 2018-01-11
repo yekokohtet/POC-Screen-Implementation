@@ -20,6 +20,7 @@ public class NowOnCinemaAdapter extends BaseRecyclerAdapter<NowOnCinemaFragmentV
     public NowOnCinemaAdapter(Context context, CinemaItemDelegate cinemaItemDelegate) {
         super(context);
         mCinemaItemDelegate = cinemaItemDelegate;
+
     }
 
     @Override

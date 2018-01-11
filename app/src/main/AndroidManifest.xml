@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".activities.MoviesListActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -30,7 +30,7 @@
         </activity>
         <provider
             android:authorities="com.padcmyanmar.poc_screen_implementation"
-            android:name=".data.persistence.MoviesProvider"
+            android:name=".persistence.MoviesProvider"
             android:exported="false"
             android:syncable="true" />
     </application>

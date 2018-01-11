@@ -1,4 +1,4 @@
-package com.padcmyanmar.poc_screen_implementation.data.persistence;
+package com.padcmyanmar.poc_screen_implementation.persistence;
 
 import android.content.ContentProvider;
 import android.content.ContentUris;
@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +24,18 @@ public class MoviesProvider extends ContentProvider {
 
     private static final UriMatcher sUriMatcher = buildUriMatcher();
 
+    private static final SQLiteQueryBuilder sGenreIDsWithPopularMoviesGenreIDs_IJ;
+
+    static {
+        sGenreIDsWithPopularMoviesGenreIDs_IJ = new SQLiteQueryBuilder();
+        sGenreIDsWithPopularMoviesGenreIDs_IJ.setTables(
+                MoviesContract.GenreIdEntry.TABLE_NAME + " INNER JOIN " +
+                        MoviesContract.PopularMovieGenreIdEntry.TABLE_NAME + " ON " +
+                        MoviesContract.GenreIdEntry.TABLE_NAME + " . " + MoviesContract.GenreIdEntry.COLUMN_GENRE_ID + " = " +
+                        MoviesContract.PopularMovieGenreIdEntry.TABLE_NAME + " . " + MoviesContract.PopularMovieGenreIdEntry.COLUMN_GENRE_ID
+        );
+    }
+
     private MovieDBHelper mDBHelper;
 
     @Override
@@ -34,13 +47,27 @@ public class MoviesProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] strings, @Nullable String s, @Nullable String[] strings1, @Nullable String s1) {
-        Cursor queryCursor = mDBHelper.getReadableDatabase().query(getTableName(uri),
-                strings,
-                s,
-                strings1,
-                null,
-                null,
-                s1);
+        Cursor queryCursor;
+        switch (sUriMatcher.match(uri)) {
+            case POPULAR_MOVIES_GENRE_IDS:
+                queryCursor = sGenreIDsWithPopularMoviesGenreIDs_IJ.query(mDBHelper.getReadableDatabase(),
+                        strings,
+                        s,
+                        strings1,
+                        null,
+                        null,
+                        s1);
+                break;
+
+            default:
+                queryCursor = mDBHelper.getReadableDatabase().query(getTableName(uri),
+                        strings,
+                        s,
+                        strings1,
+                        null,
+                        null,
+                        s1);
+        }
 
         if (getContext() != null) {
             queryCursor.setNotificationUri(getContext().getContentResolver(), uri);
@@ -48,6 +75,13 @@ public class MoviesProvider extends ContentProvider {
         return queryCursor;
     }
 
+    /**
+     * getType method က parse လုပ္​ေပးလုိက္တဲ့ uri ​ေပၚမူတည္ၿပီး
+     * အဲဒီ uri က​​ေန query လုပ္လုိက္ရင္ single data return ျပန္မွာလား
+     * collection return ျပန္မွာလား ဆိုတာ စစ္​ေပးတာ
+     * @param uri
+     * @return
+     */
     @Nullable
     @Override
     public String getType(@NonNull Uri uri) {
